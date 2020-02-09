@@ -119,7 +119,10 @@ async def redeem(ctx, *arg):
                 uses[ctx.message.author.id] += 100000000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed the secret emails`")
             else:
-                None       
+                None
+    pickle_out = open("dict.pickle", "wb")
+    pickle.dump(uses, pickle_out)
+    pickle_out.close
 
 @bot.command(pass_context=True)
 async def balance(ctx):
