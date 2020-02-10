@@ -165,9 +165,6 @@ async def bomb(ctx, *arg):
             counter=0
             for i in range(emailFreq):
                 _details(emailTarget, emailFreq)
-                counter+=1
-                if (counter%10) == 0:
-                    time.sleep(3)
             await ctx.author.send(f"\n > Email bomb completed, finished at {datetime.now()}")
             pickle_out = open("dict.pickle", "wb")
             pickle.dump(uses, pickle_out)
