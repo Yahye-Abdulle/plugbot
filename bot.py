@@ -1,4 +1,5 @@
 
+
 '''imports'''
 import sys
 from discord.ext import commands
@@ -11,7 +12,6 @@ from datetime import datetime
 import random
 import string
 import pickle
-import time
 
 bot = commands.Bot(command_prefix='*')
 
@@ -28,7 +28,7 @@ def _details(emailTarget, emailFreq):
     chooseMail = random.choice(mailAddresses)
     indexMail = mailAddresses.index(chooseMail)
     indexPass = mailPasswords[indexMail]
-    
+
     mailTarget = emailTarget
     mailFreq = int(emailFreq)
 
@@ -49,6 +49,7 @@ def _details(emailTarget, emailFreq):
     s.ehlo()
     s.login(mailFromAddr, mailFromPwd)
 
+    #for email in range(int(mailFreq)):
     s.sendmail(mailFromAddr, mailTarget, mailMsg)
 
     s.close()
@@ -64,8 +65,12 @@ async def redeem(ctx, *arg):
             if line.strip() == arg[0]:
                 uses[ctx.message.author.id] += 1000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed 1000 emails`")
-        cd1.truncate()
-        
+            else:
+                None
+            if line != to_delete:
+                cd1.write(line + '\n')
+        cd1.truncate()        
+
     with open('codes2k.txt', 'r+') as cd2:
         t = cd2.read()
         to_delete = arg[0]
@@ -74,6 +79,10 @@ async def redeem(ctx, *arg):
             if line.strip() == arg[0]:
                 uses[ctx.message.author.id] += 2500
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed 2500 emails`")
+            else:
+                None
+            if line != to_delete:
+                cd2.write(line + '\n')
         cd2.truncate()
 
     with open('codes3k.txt', 'r+') as cd3:
@@ -111,15 +120,15 @@ async def redeem(ctx, *arg):
                 uses[ctx.message.author.id] += 100000000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed the secret emails`")
             else:
-                None
-    pickle_out = open("dict.pickle", "wb")
-    pickle.dump(uses, pickle_out)
-    pickle_out.close()
+                None       
 
 @bot.command(pass_context=True)
 async def balance(ctx):
     await ctx.send(f"\n > `{ctx.message.author.name}'s Balance: {uses[ctx.message.author.id]}`")
-
+    pickle_out = open("dict.pickle", "wb")
+    pickle.dump(uses, pickle_out)
+    pickle_out.close
+'''
 @bot.command(pass_context=True)
 async def add(ctx, *arg):
     codeFile = int(arg[0])
@@ -149,7 +158,7 @@ async def add(ctx, *arg):
     #else:
        # None
 
-
+'''
 @bot.command(pass_context=True)
 async def bomb(ctx, *arg):
     emailTarget = arg[0]
@@ -157,22 +166,19 @@ async def bomb(ctx, *arg):
     #guild = ctx.message.guild
     #channel = guild.get_channel(675784308774010922)
     #if ctx.message.channel == channel:
-    if emailFreq >= 700:
-        if (uses[ctx.message.author.id]) > emailFreq:
-            await ctx.send(f"\n >>> `Email bomb started, I have DM you with start and end time! \n This bomb cost {emailFreq}`")
-            await ctx.author.send(f"\n > Email bomb started at {datetime.now()}")
-            uses[ctx.message.author.id] -= emailFreq
-            counter=0
-            for i in range(emailFreq):
-                _details(emailTarget, emailFreq)
-            await ctx.author.send(f"\n > Email bomb completed, finished at {datetime.now()}")
-            pickle_out = open("dict.pickle", "wb")
-            pickle.dump(uses, pickle_out)
-            pickle_out.close
-        else:
-            await ctx.send(f"\n >>> `{ctx.message.author.name} \n You don't have enough credits! \n Buy more at ` <https://shoppy.gg/@plugbot>") 
+    #if emailFreq >= 700:
+    if (uses[ctx.message.author.id]) > emailFreq:
+        await ctx.author.send(f"\n > Email bomb started at {datetime.now()}")
+        uses[ctx.message.author.id] -= emailFreq
+        for i in range(emailFreq):
+            _details(emailTarget, emailFreq)
+        await ctx.author.send(f"\n > Email bomb completed, finished at {datetime.now()}")
+        pickle_out = open("dict.pickle", "wb")
+        pickle.dump(uses, pickle_out)
+        pickle_out.close
     else:
-        await ctx.send(f"\n >>> `{ctx.message.author.name} \n Minimum num. of emails is 700! \n Buy more at ` <https://shoppy.gg/@plugbot>")    
-
+        await ctx.send(f"\n >>> `{ctx.message.author.name} \n You don't have enough credits! \n Buy more at ` <https://shoppy.gg/@plugbot>") 
+    #else:
+        #await ctx.send(f"\n >>> `{ctx.message.author.name} \n Minimum num. of emails is 700! \n Buy more at ` <https://shoppy.gg/@plugbot>")    
 
 bot.run(os.environ['DISCORD_TOKEN'])
