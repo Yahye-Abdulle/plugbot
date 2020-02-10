@@ -66,24 +66,9 @@ async def redeem(ctx, *arg):
             if line.strip() == arg[0]:
                 uses[ctx.message.author.id] += 1000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed 1000 emails`")
-            else:
-                None
-            if line != to_delete:
-                cd1.write(line + '\n')
-        cd1.truncate()        
-
-    with open('codes2k.txt', 'r+') as cd2:
-        t = cd2.read()
-        to_delete = arg[0]
-        cd2.seek(0)
-        for line in t.split('\n'):
-            if line.strip() == arg[0]:
-                uses[ctx.message.author.id] += 2500
-                await ctx.send(f"\n > `{ctx.message.author.name} has claimed 2500 emails`")
-            else:
-                None
-            if line != to_delete:
-                cd2.write(line + '\n')
+                pickle_out = open("dict.pickle", "wb")
+                pickle.dump(uses, pickle_out)
+                pickle_out.close
         cd2.truncate()
 
     with open('codes3k.txt', 'r+') as cd3:
@@ -94,6 +79,9 @@ async def redeem(ctx, *arg):
             if line.strip() == arg[0]:
                 uses[ctx.message.author.id] += 5000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed 5000 emails`")
+                pickle_out = open("dict.pickle", "wb")
+                pickle.dump(uses, pickle_out)
+                pickle_out.close
             else:
                 None
             if line != to_delete:
@@ -108,6 +96,9 @@ async def redeem(ctx, *arg):
             if line.strip() == arg[0]:
                 uses[ctx.message.author.id] += 10000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed 10000 emails`")
+                pickle_out = open("dict.pickle", "wb")
+                pickle.dump(uses, pickle_out)
+                pickle_out.close
             else:
                 None
             if line != to_delete:
@@ -120,18 +111,15 @@ async def redeem(ctx, *arg):
             if line.strip() == arg[0]:
                 uses[ctx.message.author.id] += 100000000
                 await ctx.send(f"\n > `{ctx.message.author.name} has claimed the secret emails`")
+                pickle_out = open("dict.pickle", "wb")
+                pickle.dump(uses, pickle_out)
+                pickle_out.close
             else:
                 None
-    pickle_out = open("dict.pickle", "wb")
-    pickle.dump(uses, pickle_out)
-    pickle_out.close
 
 @bot.command(pass_context=True)
 async def balance(ctx):
     await ctx.send(f"\n > `{ctx.message.author.name}'s Balance: {uses[ctx.message.author.id]}`")
-    pickle_out = open("dict.pickle", "wb")
-    pickle.dump(uses, pickle_out)
-    pickle_out.close
 
 @bot.command(pass_context=True)
 async def add(ctx, *arg):
