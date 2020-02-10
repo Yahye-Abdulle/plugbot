@@ -21,15 +21,15 @@ with (open("dict.pickle", "rb")) as openfile:
 
 def _details(emailTarget, emailFreq):
 
-    mailAddresses = ["freefooduk@gmail.com", "mobilegameratyt@gmail.com", "bobatyourhouse6@gmail.com", "joshdrewoffer@gmail.com", "lonquehere@gmail.com"]
-    mailPasswords = ["Minecraft786", "Yahyeabdulle94", "Yahyeabdulle94", "Minecraft786", "Minecraft786"]
+    mailAddresses = ["freefooduk@gmail.com", "mobilegameratyt@gmail.com", "bobatyourhouse6@gmail.com", "joshdrewoffer@gmail.com", "lonquehere@gmail.com", "Freeflightsuk@gmail.com", "123gamerz4eva@gmail.com", "bestnetworkuk@gmail.com"]
+    mailPasswords = ["Minecraft786", "Yahyeabdulle94", "Yahyeabdulle94", "Minecraft786", "Minecraft786", "Minecraft786", "Minecraft786", "Minecraft786"]
 
     chooseMail = random.choice(mailAddresses)
     indexMail = mailAddresses.index(chooseMail)
     indexPass = mailPasswords[indexMail]
     
     mailTarget = emailTarget
-    mailFreq = int(emailFreq*0.03)
+    mailFreq = int(emailFreq*0.07)
 
     mailServer = 'smtp.gmail.com'
     mailPort = int(587)
