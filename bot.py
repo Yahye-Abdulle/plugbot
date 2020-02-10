@@ -11,7 +11,7 @@ from datetime import datetime
 import random
 import string
 import pickle
-import sleep
+import time
 
 bot = commands.Bot(command_prefix='*')
 
