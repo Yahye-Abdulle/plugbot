@@ -30,7 +30,7 @@ def _details(emailTarget, emailFreq):
     indexPass = mailPasswords[indexMail]
     
     mailTarget = emailTarget
-    mailFreq = int(emailFreq*0.5)
+    mailFreq = int(emailFreq*0.1)
 
     mailServer = 'smtp.gmail.com'
     mailPort = int(587)
