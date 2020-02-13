@@ -170,4 +170,4 @@ async def bomb(ctx, *arg):
     else:
         await ctx.send(f"\n >>> `Wrong channel`")
 
-bot.run(process.env.DISCORD_BOT)
+bot.run("Njc1OTk5OTAxMDI4NzEyNDU4.XkW_Ow.mgawWYxeQ8U5sM-TANWtXxrCukg")
